@@ -27,14 +27,18 @@ class PicturesAdapter(val pictures: MutableList<Foto> = mutableListOf()) : Recyc
     }
 
     inner class PhotosViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(photo: Foto) {
+        fun bind(foto: Foto) {
             Picasso.get().
-            load(photo.url)
+            load(foto.url)
                 .resize(IMAGE_SIDE_PX, IMAGE_SIDE_PX)
                 .centerCrop()
                 .into(itemView.imageView)
+            itemView.titleTextView.text = foto.title
+            itemView.authorTextView.text = foto.owner
+            itemView.
         }
     }
 }
+
 
 const val IMAGE_SIDE_PX = 400

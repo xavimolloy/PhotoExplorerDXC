@@ -11,7 +11,7 @@ data class PicturesMetaData(
 
 data class PictureResponse(
     val id: String,
-    val author: String,
+    val owner: String,
     val secret: String,
     val server: String,
     val farm: Int,

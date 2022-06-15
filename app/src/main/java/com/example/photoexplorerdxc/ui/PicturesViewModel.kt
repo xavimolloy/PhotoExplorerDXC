@@ -1,33 +1,34 @@
 package com.example.photoexplorerdxc.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.databinding.Bindable
+import androidx.databinding.Observable
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.photoexplorerdxc.domain.Foto
 import com.example.photoexplorerdxc.services.WebClient
-import kotlinx.coroutines.launch
 
-class PicturesViewModel : ViewModel() {
-    private val mutablePicturesListLiveData = MutableLiveData<List<Foto>>()
-    private val picturesListLiveData: LiveData<List<Foto>> = mutablePicturesListLiveData
+class PicturesViewModel : ViewModel(), Observable {
 
-    var picturesAdapter = PicturesAdapter()
+    suspend fun fetchImages(searchTerm: String): List<Foto> {
 
-    fun loadPhotos(): LiveData<List<Foto>> {
-        viewModelScope.launch {
 
-            val searchResponse = WebClient.client.fetchImages()
-            val photosList = searchResponse.photos.photo.map { photo ->
-                Foto(
-                    id = photo.id,
-                    url = "https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg",
-                    title = photo.title
+        val searchResponse = WebClient.client.fetchImages(searchTerm)
 
-                )
-            }
-            mutablePicturesListLiveData.postValue(photosList)
+
+        return searchResponse.photos.photo.map { photo ->
+            Foto(
+                id = photo.id,
+                url = "https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg",
+                title = photo.title,
+                owner = photo.owner
+            )
+
         }
-        return picturesListLiveData
+
+    }
+
+    override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
+    }
+
+    override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
     }
 }

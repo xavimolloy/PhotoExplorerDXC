@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data >
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="com.example.photoexplorerdxc.ui.PicturesViewModel" />
+    </data>
+
+<LinearLayout
+    android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".ui.PicturesActivity"
-android:padding="4dp">
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/picturesRecyclerView"
+android:padding="4dp"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/searchBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search for something"
+        android:layout_marginBottom="4dp"
+        />
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
-</FrameLayout>
+    android:layout_height="match_parent">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/picturesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
+</layout>
